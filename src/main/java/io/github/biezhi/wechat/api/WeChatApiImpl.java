@@ -170,6 +170,9 @@ public class WeChatApiImpl implements WeChatApi {
         this.logging = false;
     }
 
+    
+    
+    //   conf.API_jsLogin = 'https://' + loginUrl + '/jslogin?appid=wx782c26e4c19acffb&fun=new&lang=zh-CN&redirect_uri=https://wx.qq.com/cgi-bin/mmwebwx-bin/webwxnewloginpage?mod=desktop';
     /**
      * 获取UUID
      *
@@ -178,8 +181,12 @@ public class WeChatApiImpl implements WeChatApi {
     private String getUUID() {
         log.info("获取二维码UUID");
         // 登录
-        ApiResponse response = this.client.send(new StringRequest("https://login.weixin.qq.com/jslogin")
-                .add("appid", "wx782c26e4c19acffb").add("fun", "new"));
+        ApiResponse response = this.client.send(new StringRequest("https://login.wx.qq.com/jslogin")
+                .add("appid", "wx782c26e4c19acffb")
+                .add("fun", "new")
+                .add("lang", "zh-CN")
+                .add("redirect_uri", "https://wx.qq.com/cgi-bin/mmwebwx-bin/webwxnewloginpage?mod=desktop")
+        );
 
         Matcher matcher = UUID_PATTERN.matcher(response.getRawBody());
         if (matcher.find() && StateCode.SUCCESS.equals(matcher.group(1))) {
